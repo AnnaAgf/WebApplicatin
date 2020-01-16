@@ -1,0 +1,33 @@
+﻿@model WebApplicatin.Models.SkiResortView
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+@Html.ActionLink("Назад к списку", "Index")
+<table class="table table-bordered">
+    <tr>
+        <td>Id</td>
+        <td>@Model.Id</td>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <td>Country</td>
+        <td>@Model.Country</td>
+    </tr>
+    <tr>
+        <td>Height</td>
+        <td>@Model.Height</td>
+    </tr>
+    <tr>
+        <td>PathLenght</td>
+        <td>@Model.PathLenght</td>
+    </tr>
+</table>
+
+
