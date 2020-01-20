@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicatin.Controllers
 {
-    public class HomeController : Controller
+    public class NotFoundErrorController : Controller
     {
         public IActionResult Index()
         {

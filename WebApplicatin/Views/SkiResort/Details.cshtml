@@ -1,0 +1,36 @@
+﻿@model SkiResortView
+
+@{
+    ViewData["Title"] = "Детали выбранного курорта";
+}
+
+    
+    <div class="container">
+        <h1>Детали выбранного курорта</h1>
+
+        <table class="table table-bordered">
+            <tr>
+                <td>Id</td>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>Country</td>
+                <td>@Model.Country</td>
+            </tr>
+            <tr>
+                <td>Height</td>
+                <td>@Model.Height</td>
+            </tr>
+            <tr>
+                <td>PathLenght</td>
+                <td>@Model.PathLenght</td>
+            </tr>
+        </table>
+        @Html.ActionLink("Назад к списку", "Index")
+    </div>
+
+

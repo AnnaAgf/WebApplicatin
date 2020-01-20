@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicatin.Controllers
 {
-    public class HomeController : Controller
+    public class BlogController : Controller
     {
         public IActionResult Index()
+        {
+            return View();
+        }
+        public IActionResult BlogSingle()
         {
             return View();
         }
