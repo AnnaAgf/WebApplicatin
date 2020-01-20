@@ -1,0 +1,20 @@
+﻿@model IEnumerable<SkiResortView>
+@{
+    ViewData["Title"] = "Список курортов";
+}
+
+    <div class="container">
+        <h1>SkiResorts</h1>
+        <table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Country</td>
+                    <td>
+                        @Html.ActionLink("More", "Details", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
