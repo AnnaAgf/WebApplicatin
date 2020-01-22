@@ -7,6 +7,7 @@ using WebApplicatin.Models;
 
 namespace WebApplicatin.Controllers
 {
+    [Route("skiresort")]
     public class SkiResortController : Controller
     {
         private readonly List<SkiResortView> _skiResorts = new List<SkiResortView>
@@ -39,12 +40,14 @@ namespace WebApplicatin.Controllers
         };
 
         // GET: /home/index
+        [Route("all")]
         public IActionResult Index()
         {
             return View(_skiResorts);
         }
 
         // GET: /home/details/{id}
+        [Route("details")]
         public IActionResult Details(int id)
         {
             var skiResort = _skiResorts.FirstOrDefault(x => x.Id == id);

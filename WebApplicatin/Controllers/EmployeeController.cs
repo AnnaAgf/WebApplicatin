@@ -4,9 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicatin.Models;
+using WebApplicatin.Infrastructure;
 
 namespace WebApplicatin.Controllers
 {
+    [Route("users")]
+
     public class EmployeesController : Controller
     {
         private readonly List<EmployeeView> _employees = new List<EmployeeView>
@@ -45,12 +48,15 @@ namespace WebApplicatin.Controllers
         };
 
         // GET: /home/index
+        [Route("all")]
         public IActionResult Index()
         {
             return View(_employees);
         }
 
         // GET: /home/details/{id}
+        [Route("{id}")]
+        [SimpleActionFilter]
         public IActionResult Details(int id)
         {
             var employee = _employees.FirstOrDefault(x => x.Id == id);

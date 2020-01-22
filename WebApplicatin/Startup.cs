@@ -35,6 +35,10 @@ namespace WebApplicatin
                 app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
+            app.UseWelcomePage("/welcome");
+            //app.UseMiddleware<TokenMiddleware>("555555");
+            //app.UseToken("555555");
+            
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
