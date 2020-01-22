@@ -1,0 +1,42 @@
+﻿@model EmployeeView
+
+@{
+    ViewData["Title"] = "Детали выбранного работника";
+}
+
+
+    <div class="container">
+        <h1>Детали выбранного работника</h1>
+
+        <table class="table table-bordered">
+            <tr>
+                <td>Id</td>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td>FirstName</td>
+                <td>@Model.FirstName</td>
+            </tr>
+            <tr>
+                <td>SurName</td>
+                <td>@Model.SurName</td>
+            </tr>
+            <tr>
+                <td>Skill</td>
+                <td>@Model.Skill</td>
+            </tr>
+            <tr>
+                <td>Country</td>
+                <td>@Model.Country</td>
+            </tr>
+            <tr>
+                <td>Height</td>
+                <td>@Model.Height</td>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td>@Model.Age</td>
+            </tr>
+        </table>
+        @Html.ActionLink("Назад к списку", "Index")
+    </div>
