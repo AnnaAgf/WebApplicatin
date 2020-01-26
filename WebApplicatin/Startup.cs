@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApplicatin.Infrastructure;
+using WebApplicatin.Infrastructure.Interfaces;
+using WebApplicatin.Infrastructure.Implementations;
 
 namespace WebApplicatin
 {
@@ -25,7 +28,12 @@ namespace WebApplicatin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            //добавл€ем разрешение зависимости (интерфейс, экземпл€р класса)
+            services.AddSingleton<IEmployeesService, InMemoryEmployeesService>();
+            services.AddSingleton<ISkiResortService, InMemorySkiResortService>();
         }
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -34,7 +42,11 @@ namespace WebApplicatin
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseStaticFiles();
+            app.UseWelcomePage("/welcome");
+            //app.UseMiddleware<TokenMiddleware>("555555");
+            //app.UseToken("555555");
+            
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
