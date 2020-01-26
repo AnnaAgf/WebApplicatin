@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicatin.Models;
 using WebApplicatin.Infrastructure;
+using WebApplicatin.Infrastructure.Interfaces;
 
 namespace WebApplicatin.Controllers
 {
@@ -12,58 +13,77 @@ namespace WebApplicatin.Controllers
 
     public class EmployeesController : Controller
     {
-        private readonly List<EmployeeView> _employees = new List<EmployeeView>
-        {
-            new EmployeeView
-            {
-                Id = 1,
-                FirstName = "Petr",
-                SurName = "Petrov",
-                Skill = "A",
-                Country = "Russia",
-                Age = 30,
-                Height = 180
+        private readonly IEmployeesService _employeesService;
 
-            },
-            new EmployeeView
-            {
-                Id = 2,
-                FirstName = "Max",
-                SurName = "Black",
-                Skill = "B",
-                Country = "USA",
-                Age = 31,
-                Height = 185
-            },
-            new EmployeeView
-            {
-                Id = 3,
-                FirstName = "Juan",
-                SurName = "Salvador",
-                Skill = "C",
-                Country = "Spain",
-                Age = 32,
-                Height = 175
-            }
-        };
+        //внедрение зависимости - Depend.Injection
+        public EmployeesController(IEmployeesService employeesService)
+        {
+            _employeesService = employeesService;
+        }
+       
 
         // GET: /home/index
         [Route("all")]
         public IActionResult Index()
         {
-            return View(_employees);
+            return View(_employeesService.GetAll());
         }
 
         // GET: /home/details/{id}
         [Route("{id}")]
-        [SimpleActionFilter]
+        //[SimpleActionFilter]
         public IActionResult Details(int id)
         {
-            var employee = _employees.FirstOrDefault(x => x.Id == id);
+            var employee = _employeesService.GetById(id);
             if (employee == null)
                 return NotFound();
 
             return View(employee);
+        }
+        [HttpGet]
+        [Route("edit/{id?}")]
+        public IActionResult Edit(int? id)
+        {
+            if (!id.HasValue)
+                return View(new EmployeeView());
+
+            EmployeeView model = _employeesService.GetById(id.Value);
+            if (model == null)
+                return NotFound();
+
+            return View(model);
+        }
+        [HttpPost]
+        [Route("edit/{id?}")]
+        public IActionResult Edit(EmployeeView model)
+        {
+            if (model.Id > 0)
+            {
+                var dbItem = _employeesService.GetById(model.Id);
+                
+                if (ReferenceEquals(dbItem, null))
+                    return NotFound();// возвращаем результат 404 Not Found
+
+                dbItem.FirstName = model.FirstName;
+                dbItem.SurName = model.SurName;
+                dbItem.Age = model.Age;
+                dbItem.Country = model.Country;
+                dbItem.Skill = model.Skill;
+            }
+            else // иначе добавляем модель в список
+            {
+                _employeesService.AddNew(model);
+            }
+            _employeesService.Commit(); // станет актуальным позднее (когда добавим БД)
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Route("delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            _employeesService.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
