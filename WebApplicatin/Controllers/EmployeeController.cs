@@ -57,6 +57,18 @@ namespace WebApplicatin.Controllers
         [Route("edit/{id?}")]
         public IActionResult Edit(EmployeeView model)
         {
+            //добавление своей валидации
+            if (model.Age < 18 || model.Age > 50)
+            {
+                ModelState.AddModelError("Age", "Ошибка возраста");
+            }
+
+            //добавление валидации
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             if (model.Id > 0)
             {
                 var dbItem = _employeesService.GetById(model.Id);
