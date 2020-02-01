@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using WebApplicatin.Infrastructure;
 using WebApplicatin.Infrastructure.Interfaces;
 using WebApplicatin.Infrastructure.Implementations;
+using WebApplicatin.DAL;
 
 namespace WebApplicatin
 {
@@ -28,6 +30,10 @@ namespace WebApplicatin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            //дл€ использовани€ DbContext -> appsettings
+            services.AddDbContext<WebApplicatinContext>(options => options
+                .UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
             //добавл€ем разрешение зависимости (интерфейс, экземпл€р класса)
             services.AddSingleton<IEmployeesService, InMemoryEmployeesService>();
