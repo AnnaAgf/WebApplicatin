@@ -37,9 +37,9 @@ namespace WebApplicatin
 
             //добавл€ем разрешение зависимости (интерфейс, экземпл€р класса)
             services.AddSingleton<IEmployeesService, InMemoryEmployeesService>();
+            services.AddScoped<IProductService, SqlProductService>(); 
             services.AddSingleton<ISkiResortService, InMemorySkiResortService>();
 
-            services.AddSingleton<IProductService, InMemoryProductService>();
         }
         
 

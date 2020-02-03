@@ -8,7 +8,7 @@ using WebApplicatin.Models;
 
 namespace WebApplicatin.ViewComponents
 {
-    [ViewComponent(Name = "Brands")]
+    //[ViewComponent(Name = "Brands")]
     public class BrandsViewComponent : ViewComponent
     {
         // 1.наследование от ViewComponent

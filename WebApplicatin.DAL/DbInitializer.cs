@@ -291,14 +291,14 @@ namespace WebApplicatin.DAL
             };
             using (var trans = context.Database.BeginTransaction())
             {
-                foreach (var section in categories)
+                foreach (var brand in brands)
                 {
-                    context.Categories.Add(section);
+                    context.Brands.Add(brand);
                 }
 
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Categories] ON");
+                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brands] ON");
                 context.SaveChanges();
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Categories] OFF");
+                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brands] OFF");
                 trans.Commit();
             }
 
@@ -427,14 +427,14 @@ namespace WebApplicatin.DAL
             };
             using (var trans = context.Database.BeginTransaction())
             {
-                foreach (var section in categories)
+                foreach (var product in products)
                 {
-                    context.Categories.Add(section);
+                    context.Products.Add(product);
                 }
 
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Categories] ON");
+                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] ON");
                 context.SaveChanges();
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Categories] OFF");
+                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] OFF");
                 trans.Commit();
             }
 

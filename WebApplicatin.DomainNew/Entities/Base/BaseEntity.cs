@@ -11,7 +11,8 @@ namespace WebApplicatin.Domain.Entities.Base
     {
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] //идентификатор на первичный ключ
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+        //идентификатор на первичный ключ
         // атрибуты нужны для связывания доменной модели с бд
         public int Id { get; set; }
     }
