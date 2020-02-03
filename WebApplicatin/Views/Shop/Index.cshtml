@@ -1,0 +1,28 @@
+﻿@model WebApplicatin.Models.ShopViewModel
+@{
+    ViewData["Title"] = "Магазин";
+}
+@await Html.PartialAsync("_Head");
+
+<body>
+    <section id="advertisement">
+        <div class="container">
+            <img src="images/shop/advertisement.jpg" alt="" />
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    @await Html.PartialAsync("../Home/_Partial/_Left-sidebar");
+                </div>
+
+                <div class="col-sm-9 padding-right">
+                    @*отрисовывает модели -> можем передать парам*@
+                    @await Html.PartialAsync("../Home/_Partial/_ProductItems", Model.Products);
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

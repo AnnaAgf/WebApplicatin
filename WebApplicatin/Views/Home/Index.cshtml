@@ -1,19 +1,21 @@
-﻿@model IEnumerable<WebApplicatin.Models.SkiResortView>
+﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Главная страница";
 }
+@await Html.PartialAsync("_Partial/_Slider");
 
-<h1>SkiResorts</h1>
-<table>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Name</td>
-            <td>@item.Country</td>
-            <td>
-                    @Html.ActionLink("More", "Details", new { id = item.Id })
-            </td>
-        </tr>
-    }
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                @await Html.PartialAsync("_Partial/_Left-sidebar");
+            </div>
 
-</table>
+            <div class="col-sm-9 padding-right">
+                @await Html.PartialAsync("_Partial/_FeaturesItems")
+                @await Html.PartialAsync("_Partial/_CategoryTab")
+                @await Html.PartialAsync("_Partial/_RecommendedItems")
+            </div>
+        </div>
+    </div>
+</section>
