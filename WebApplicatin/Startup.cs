@@ -5,14 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
 using WebApplicatin.Infrastructure;
 using WebApplicatin.Infrastructure.Interfaces;
 using WebApplicatin.Infrastructure.Implementations;
 using WebApplicatin.DAL;
+using WebApplicatin.DomainNew.Entities;
 
 namespace WebApplicatin
 {
@@ -37,9 +39,30 @@ namespace WebApplicatin
 
             //добавл€ем разрешение зависимости (интерфейс, экземпл€р класса)
             services.AddSingleton<IEmployeesService, InMemoryEmployeesService>();
-            services.AddScoped<IProductService, SqlProductService>(); 
+            services.AddScoped<IProductService, SqlProductService>();
             services.AddSingleton<ISkiResortService, InMemorySkiResortService>();
 
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<WebApplicatinContext>()
+                .AddDefaultTokenProviders();
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+
+                // Lockout settings
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
         }
         
 
@@ -56,6 +79,8 @@ namespace WebApplicatin
             //app.UseToken("555555");
             
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

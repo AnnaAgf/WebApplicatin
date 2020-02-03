@@ -1,11 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using WebApplicatin.DomainNew.Entities;
 using WebApplicatin.Domain.Entities;
 
 namespace WebApplicatin.DAL
 {
     // класс, отвечающий за подключение к бд
-    public class WebApplicatinContext : DbContext
+    public class WebApplicatinContext : IdentityDbContext<User>
     {
         //конструктор
         public WebApplicatinContext(DbContextOptions options) : base(options)
