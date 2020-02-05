@@ -25,6 +25,7 @@ namespace WebApplicatin
                 {
                     WebApplicatinContext context = services.GetRequiredService<WebApplicatinContext>();
                     DbInitializer.Initialize(context);
+                    DbInitializer.InitializeUser(services);
                 }
                 catch (Exception ex)
                 {

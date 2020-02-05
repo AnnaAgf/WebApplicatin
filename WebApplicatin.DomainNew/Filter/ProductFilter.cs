@@ -9,5 +9,6 @@ namespace WebApplicatin.Domain.Filter
     {
         public int? CategoryId { get; set; }
         public int? BrandId { get; set; }
+        public List<int> Ids { get; set; }
     }
 }

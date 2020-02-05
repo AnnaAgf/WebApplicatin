@@ -89,6 +89,8 @@ namespace WebApplicatin.Controllers
             //Метод для авторизации после успеха
             await _signInManager.SignInAsync(user, false);
 
+            //при регистрации доем роль пользователя
+            await _userManager.AddToRoleAsync(user, "User");
             return RedirectToAction("Index", "Home");
         }
     }

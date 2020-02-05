@@ -63,6 +63,9 @@ namespace WebApplicatin
                 // User settings
                 options.User.RequireUniqueEmail = true;
             });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ICartService, CookieCartService>();
         }
         
 
@@ -81,6 +84,7 @@ namespace WebApplicatin
             app.UseRouting();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

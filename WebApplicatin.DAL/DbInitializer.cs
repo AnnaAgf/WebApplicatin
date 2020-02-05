@@ -3,7 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.DependencyInjection;
 using WebApplicatin.Domain.Entities;
+using WebApplicatin.DAL;
+using WebApplicatin.DomainNew.Entities;
+using Microsoft.AspNetCore.Identity;
+using System.Threading;
 
 namespace WebApplicatin.DAL
 {
@@ -439,5 +446,50 @@ namespace WebApplicatin.DAL
             }
 
         }
+
+        public static void InitializeUser(IServiceProvider services)
+        {
+            //для генерации пользователя
+            var roleManager = services.GetService<RoleManager<IdentityRole>>();
+            //создает юзеров
+            EnsureRole(roleManager, "User");
+            EnsureRole(roleManager, "Admin");
+            //добавляют в группу админов
+            EnsureRoleToUser(services, "Admin", "Admin", "Admin@123");
+        }
+
+        private static void EnsureRole(RoleManager<IdentityRole> roleManager, string roleName)
+        {
+            //проверка роли, если не существует - создать
+            //result тк метод ассинхронный
+            if (!roleManager.RoleExistsAsync(roleName).Result)
+                roleManager.CreateAsync(new IdentityRole(roleName)).Wait();
+        }
+
+        //создание и добавление в бд
+        private static void EnsureRoleToUser(IServiceProvider services, string userName, string roleName, string password)
+        {
+            //получение польз из сервиса
+            var userManager = services.GetService<UserManager<User>>();
+            var userStore = services.GetService<IUserStore<User>>();
+
+            // если пользователь уже есть, то выходим
+            if (userStore.FindByNameAsync(userName, CancellationToken.None).Result != null)
+            {
+                return;
+            }
+
+            //создание юзера
+            var admin = new User
+            {
+                UserName = userName,
+                Email = $"{userName}@domain.com"
+            };
+            //добавление роли юзеру
+            if (userManager.CreateAsync(admin, password).Result.Succeeded)
+                userManager.AddToRoleAsync(admin, roleName).Wait();
+        }
+
+        
     }
 }

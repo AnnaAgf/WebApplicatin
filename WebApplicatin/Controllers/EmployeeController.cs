@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using WebApplicatin.Models;
 using WebApplicatin.Infrastructure;
 using WebApplicatin.Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplicatin.Controllers
 {
     [Route("users")]
+    [Authorize]
 
     public class EmployeesController : Controller
     {
@@ -24,6 +26,7 @@ namespace WebApplicatin.Controllers
 
         // GET: /home/index
         [Route("all")]
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View(_employeesService.GetAll());
@@ -42,6 +45,7 @@ namespace WebApplicatin.Controllers
         }
         [HttpGet]
         [Route("edit/{id?}")]
+        [Authorize(Roles ="Admin")]
         public IActionResult Edit(int? id)
         {
             if (!id.HasValue)
@@ -55,6 +59,7 @@ namespace WebApplicatin.Controllers
         }
         [HttpPost]
         [Route("edit/{id?}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(EmployeeView model)
         {
             //добавление своей валидации
@@ -92,6 +97,7 @@ namespace WebApplicatin.Controllers
         }
 
         [Route("delete/{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             _employeesService.Delete(id);
