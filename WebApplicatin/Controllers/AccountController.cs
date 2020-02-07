@@ -27,6 +27,7 @@ namespace WebApplicatin.Controllers
             return View(new LoginViewModel());
         }
 
+
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -54,6 +55,7 @@ namespace WebApplicatin.Controllers
             return RedirectToAction("Index", "Home"); //иначе на главную
         }
 
+
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
@@ -66,6 +68,7 @@ namespace WebApplicatin.Controllers
         {
             return View(new RegisterUserViewModel());
         }
+
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserViewModel model)

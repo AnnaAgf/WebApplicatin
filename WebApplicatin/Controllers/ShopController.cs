@@ -51,13 +51,6 @@ namespace WebApplicatin.Controllers
         {
             return View();
         }
-        public IActionResult Cart()
-        {
-            return View();
-        }
-        public IActionResult Login()
-        {
-            return View();
-        }
+        
     }
 }
